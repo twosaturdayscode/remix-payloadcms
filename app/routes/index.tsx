@@ -1,22 +1,15 @@
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import payload from "payload";
 
-export const loader: LoaderFunction = async () => {
-  const test = await payload.find({ collection: "users" });
-  console.log(test)
-  return json({
-    message: "Hello",
-  });
+export const loader: LoaderFunction = async ({ context }) => {
+  const test = await context?.payload.find({ collection: "users" });
+  return json(test);
 };
 
 export default function Index() {
-  const data = useLoaderData();
-  console.log("@@@ data: ", data);
-
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
+    <div>
       <h1>Welcome to Remix</h1>
       <ul>
         <li>
@@ -43,6 +36,7 @@ export default function Index() {
           </a>
         </li>
       </ul>
+      <div className="i-tabler:brand-twitter w-5 h-5 color-red"></div>
     </div>
   );
 }

@@ -41,11 +41,17 @@ app.all(
         return createRequestHandler({
           build: require(BUILD_DIR),
           mode: process.env.NODE_ENV,
+          getLoadContext(req, res) {
+            return { payload: req.payload ?? {} };
+          },
         })(req, res, next);
       }
     : createRequestHandler({
         build: require(BUILD_DIR),
         mode: process.env.NODE_ENV,
+        getLoadContext(req, res) {
+          return { payload: req.payload ?? {} };
+        },
       })
 );
 const port = process.env.PORT || 3000;
